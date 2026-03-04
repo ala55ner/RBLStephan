@@ -228,9 +228,8 @@ function setupFrameScrollBinding() {
     end: "bottom bottom",
     scrub: true,
     onUpdate: (self) => {
-      // Cap frame animation at 80% of total scroll (stops before contact section)
-      const capped = Math.min(self.progress / 0.8, 1);
-      const accelerated = Math.min(capped * FRAME_SPEED, 1);
+      // Advance frames throughout entire scroll - husky rotates continuously
+      const accelerated = Math.min(self.progress * FRAME_SPEED, 1);
       const index = Math.min(
         Math.floor(accelerated * FRAME_COUNT),
         FRAME_COUNT - 1
