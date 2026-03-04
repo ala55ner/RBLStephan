@@ -1,0 +1,29 @@
+{
+  "name": "video-to-website",
+  "version": "1.0.0",
+  "description": "Premium scroll-driven animated website builder powered by video frames",
+  "type": "module",
+  "scripts": {
+    "start": "npx serve .",
+    "serve": "npx serve . -l 3000",
+    "serve:python": "python -m http.server 8000",
+    "extract-frames": "echo 'Run: ffmpeg -i \"<video>\" -vf \"fps=<fps>,scale=1920:-1\" -c:v libwebp -quality 80 \"frames/frame_%04d.webp\"'",
+    "test": "echo 'Open http://localhost:3000 and scroll through all sections'"
+  },
+  "keywords": [
+    "video",
+    "animation",
+    "scroll",
+    "gsap",
+    "lenis",
+    "canvas",
+    "web-design"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insight Veterinary Ophthalmologists</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 1. Loader -->
+  <div id="loader" class="loader-container">
+    <div class="loader-brand">INSIGHT</div>
+    <div id="loader-bar" class="loader-bar">
+      <div id="loader-progress" class="loader-progress"></div>
+    </div>
+    <div id="loader-percent" class="loader-percent">0%</div>
+  </div>
+
+  <!-- 2. Fixed Header -->
+  <header class="site-header">
+    <nav class="site-nav">
+      <div class="logo">INSIGHT</div>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Page Layout: Two-column with fixed right canvas -->
+  <div class="page-layout">
+    <!-- Left Panel: Scrollable text content -->
+    <div class="left-panel">
+      <!-- Hero text block (visible on landing) -->
+      <div class="hero-text">
+        <h1 class="hero-heading"><span>INSIGHT</span></h1>
+        <p class="hero-subtitle">Veterinary Ophthalmologists</p>
+        <p class="hero-tagline">Advanced vision care for animals</p>
+        <p class="hero-location">Family-owned specialty practice · Annapolis, Maryland</p>
+        <div class="scroll-indicator">
+          <span>Scroll to explore</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <section class="stream-section" id="about">
+        <span class="section-label">About</span>
+        <h2 class="section-heading">About Insight</h2>
+        <p class="section-body">Insight Veterinary Ophthalmologists is a family-owned specialty practice based in Annapolis, Maryland, focused exclusively on diagnosing and treating eye conditions in animals. Our team combines advanced medical expertise with compassionate care to protect and restore vision for pets across the region.</p>
+      </section>
+
+      <!-- Services Section -->
+      <section class="stream-section" id="services">
+        <span class="section-label">Services</span>
+        <h2 class="section-heading">Specialized Care</h2>
+        <ul class="services-list">
+          <li>Cataract Surgery</li>
+          <li>Glaucoma Management</li>
+          <li>Corneal Disease Treatment</li>
+          <li>Retinal Diagnostics</li>
+          <li>Emergency Eye Care</li>
+        </ul>
+      </section>
+
+      <!-- Why Insight Section -->
+      <section class="stream-section">
+        <span class="section-label">Why Insight</span>
+        <div class="pillars-list">
+          <div class="pillar">
+            <h3 class="pillar-title">Board-Certified Expertise</h3>
+            <p class="pillar-body">Highly trained veterinary ophthalmologists providing advanced diagnosis and treatment.</p>
+          </div>
+          <div class="pillar">
+            <h3 class="pillar-title">Advanced Diagnostic Technology</h3>
+            <p class="pillar-body">Modern imaging and surgical tools designed specifically for ophthalmic care.</p>
+          </div>
+          <div class="pillar">
+            <h3 class="pillar-title">Compassionate Care</h3>
+            <p class="pillar-body">Family-owned practice focused on thoughtful, individualized care for every patient.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="stream-section section-stats">
+        <span class="section-label">By The Numbers</span>
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="stat-number" data-value="15" data-decimals="0">0</span>
+            <span class="stat-label">Years of Experience</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-value="5000" data-decimals="0">0</span>
+            <span class="stat-label">Patients Treated</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-value="98" data-decimals="0">0</span>
+            <span class="stat-label">% Satisfaction</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-value="2" data-decimals="0">0</span>
+            <span class="stat-label">Board Certifications</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Right Panel: Spacer for fixed canvas -->
+    <div class="right-panel"></div>
+  </div>
+
+  <!-- Contact/CTA Section (Full-width, after scroll area) -->
+  <section class="contact-section" id="contact">
+    <div class="contact-content">
+      <h2 class="section-heading">Request an Appointment</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="contact-label">Phone</span>
+          <a href="tel:+14105550192">(410) 555-0192</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Email</span>
+          <a href="mailto:info@insightvetoph.com">info@insightvetoph.com</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Location</span>
+          <p>Annapolis, Maryland</p>
+        </div>
+      </div>
+      <button class="cta-button">Schedule a Consultation</button>
+    </div>
+  </section>
+
+  <!-- Canvas Container (fixed to right 58%) -->
+  <div class="canvas-wrap">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <!-- CDN Scripts (order matters) -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
