@@ -2,7 +2,7 @@
 // INITIALIZATION & SETUP
 // ============================================================================
 
-const FRAME_SPEED = 2.0; // 1.8-2.2, higher = product animation finishes earlier
+const FRAME_SPEED = 1.0; // Frame rate multiplier - 1.0 spreads all frames across full scroll
 const IMAGE_SCALE = 0.78; // Smaller scale for eye floating in black void
 let frames = [];
 let currentFrame = 0;
