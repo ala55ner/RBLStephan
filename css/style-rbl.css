@@ -116,7 +116,7 @@ p {
 }
 
 /* ============================================
-   SECTIONS
+   SECTIONS - CLEAN SPACING SYSTEM
    ============================================ */
 
 section {
@@ -124,12 +124,26 @@ section {
     overflow: hidden;
 }
 
+/* Universal Section Setup */
+section {
+    padding: 8vh 0;
+}
+
+.section-inner {
+    padding: 0 var(--spacing-xl);
+}
+
+/* Hero Section */
 .hero {
     background: linear-gradient(135deg, var(--color-secondary-blue) 0%, #0D2147 100%);
-    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
     min-height: 75vh;
     display: flex;
     align-items: center;
+}
+
+.hero .section-inner {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -201,10 +215,14 @@ section {
 /* Opening Section */
 .section-opening {
     background: linear-gradient(180deg, #F5F5F5 0%, #EFEFEF 100%);
-    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
     min-height: 70vh;
     display: flex;
     align-items: center;
+}
+
+.section-opening .section-inner {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -227,8 +245,12 @@ section {
 /* Why RBL */
 .section-why-rbl {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
     min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+.section-why-rbl .section-inner {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -340,10 +362,14 @@ section {
 /* Sleeve Section */
 .section-sleeve {
     background: linear-gradient(180deg, #E8E8E8 0%, #DEDEDE 100%);
-    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
     min-height: 70vh;
     display: flex;
     align-items: center;
+}
+
+.section-sleeve .section-inner {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -392,8 +418,12 @@ section {
 /* Potential Section */
 .section-potential {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
     min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+.section-potential .section-inner {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -448,9 +478,13 @@ section {
 /* Stats Section */
 .section-stats {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
-    position: relative;
     min-height: 70vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.section-stats .section-inner {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -500,10 +534,14 @@ section {
 /* Final Section */
 .section-final {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
     min-height: 60vh;
     display: flex;
     align-items: center;
+}
+
+.section-final .section-inner {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
