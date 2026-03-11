@@ -341,10 +341,18 @@ section {
 .section-sleeve {
     background: linear-gradient(180deg, #E8E8E8 0%, #DEDEDE 100%);
     padding: 6vh var(--spacing-xl) 6vh var(--spacing-xl);
-    min-height: 50vh;
+    min-height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.section-sleeve .section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .sleeve-content h2 {
@@ -396,7 +404,12 @@ section {
     min-height: 70vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
+}
+
+.section-potential .section-inner {
+    width: 100%;
 }
 
 .activation-grid {
