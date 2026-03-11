@@ -116,35 +116,29 @@ p {
 }
 
 /* ============================================
-   SECTIONS - CLEAN SPACING SYSTEM
+   SECTIONS - SEAMLESS SCROLL SYSTEM
    ============================================ */
 
 section {
     position: relative;
     overflow: hidden;
-}
-
-/* Universal Section Setup */
-section {
-    padding: 8vh 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .section-inner {
-    padding: 0 var(--spacing-xl);
+    padding: var(--spacing-xl);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, var(--color-secondary-blue) 0%, #0D2147 100%);
-    min-height: 75vh;
-    display: flex;
-    align-items: center;
-}
-
-.hero .section-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .hero-badge {
@@ -215,15 +209,6 @@ section {
 /* Opening Section */
 .section-opening {
     background: linear-gradient(180deg, #F5F5F5 0%, #EFEFEF 100%);
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-}
-
-.section-opening .section-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .section-opening h2 {
@@ -245,15 +230,6 @@ section {
 /* Why RBL */
 .section-why-rbl {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-}
-
-.section-why-rbl .section-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .section-title {
@@ -362,15 +338,6 @@ section {
 /* Sleeve Section */
 .section-sleeve {
     background: linear-gradient(180deg, #E8E8E8 0%, #DEDEDE 100%);
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-}
-
-.section-sleeve .section-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .sleeve-content h2 {
@@ -418,15 +385,6 @@ section {
 /* Potential Section */
 .section-potential {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-}
-
-.section-potential .section-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .activation-grid {
@@ -478,16 +436,7 @@ section {
 /* Stats Section */
 .section-stats {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    min-height: 70vh;
     position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.section-stats .section-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .stats-grid {
@@ -534,15 +483,6 @@ section {
 /* Final Section */
 .section-final {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-}
-
-.section-final .section-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .section-final h2 {
