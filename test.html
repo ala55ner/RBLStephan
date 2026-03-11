@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Layout</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0C2043; font-family: Arial, sans-serif; }
+
+        .video-player-container {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 60%;
+            height: 100vh;
+            background: #0C2043;
+            z-index: 5;
+            border: 2px solid red;
+        }
+
+        .hero-canvas {
+            width: 100%;
+            height: 100%;
+            background: #333;
+        }
+
+        .content-wrapper {
+            width: 40%;
+            position: relative;
+            z-index: 10;
+            background: white;
+            min-height: 200vh;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .section-lockup {
+            background: white;
+            padding: 100px 40px;
+            text-align: center;
+            border: 2px solid green;
+        }
+
+        .lockup-logos {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-image {
+            max-width: 150px;
+            height: auto;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-player-container">
+        <canvas id="heroCanvas" class="hero-canvas"></canvas>
+    </div>
+
+    <div class="content-wrapper">
+        <h1>Test Content</h1>
+        <p>Scroll down to see the logo section</p>
+
+        <section class="section-lockup">
+            <h2>Partnership</h2>
+            <div class="lockup-logos">
+                <div class="lockup-logo-left">
+                    <img src="logos/RB_Leipzig_2014_logo.svg" alt="RB Leipzig" class="logo-image">
+                </div>
+                <div class="lockup-divider">+</div>
+                <div class="lockup-logo-right">
+                    <img src="logos/Revolut-logo.svg" alt="Revolut" class="logo-image">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        console.log('Test page loaded');
+
+        const canvas = document.getElementById('heroCanvas');
+        console.log('Canvas:', canvas);
+
+        const ctx = canvas.getContext('2d');
+        console.log('Canvas context:', ctx);
+
+        // Size canvas
+        const rect = canvas.parentElement.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        ctx.scale(dpr, dpr);
+
+        console.log('Canvas sized:', canvas.width, canvas.height);
+
+        // Try loading a frame
+        const img = new Image();
+        img.onload = function() {
+            console.log('Image loaded successfully');
+            ctx.clearRect(0, 0, rect.width, rect.height);
+            ctx.drawImage(img, 0, 0, rect.width, rect.height);
+        };
+        img.onerror = function() {
+            console.error('Failed to load image');
+        };
+        img.src = 'frames/frame_0001.png';
+
+        window.addEventListener('scroll', function() {
+            const progress = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            console.log('Scroll progress:', progress);
+        });
+    </script>
+</body>
+</html>

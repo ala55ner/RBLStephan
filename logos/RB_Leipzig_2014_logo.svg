@@ -1,0 +1,30 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- RB Leipzig Bull Logo -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#DD013F" stroke-width="2"/>
+
+  <!-- Bull head outline -->
+  <g fill="none" stroke="#DD013F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Head -->
+    <circle cx="100" cy="95" r="40"/>
+
+    <!-- Left horn -->
+    <path d="M 75 70 Q 60 50 55 30"/>
+
+    <!-- Right horn -->
+    <path d="M 125 70 Q 140 50 145 30"/>
+
+    <!-- Left eye -->
+    <circle cx="85" cy="90" r="4" fill="#DD013F"/>
+
+    <!-- Right eye -->
+    <circle cx="115" cy="90" r="4" fill="#DD013F"/>
+
+    <!-- Snout -->
+    <path d="M 95 110 L 105 110"/>
+    <circle cx="92" cy="115" r="3" fill="#DD013F"/>
+    <circle cx="108" cy="115" r="3" fill="#DD013F"/>
+  </g>
+
+  <!-- RB Text -->
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#DD013F" text-anchor="middle">RB</text>
+</svg>

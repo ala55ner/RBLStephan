@@ -1,0 +1,22 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Revolut Logo -->
+  <!-- Circular design with R -->
+
+  <!-- Outer circle -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#DD013F" stroke-width="2"/>
+
+  <!-- Inner design - stylized R -->
+  <g fill="none" stroke="#DD013F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Vertical line of R -->
+    <path d="M 85 70 L 85 130"/>
+
+    <!-- Top curve of R -->
+    <path d="M 85 70 L 110 70 Q 120 70 120 85 Q 120 95 110 95 L 85 95"/>
+
+    <!-- Diagonal leg of R -->
+    <path d="M 110 95 L 130 130"/>
+  </g>
+
+  <!-- REVOLUT text -->
+  <text x="100" y="155" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#DD013F" text-anchor="middle" letter-spacing="1">REVOLUT</text>
+</svg>
