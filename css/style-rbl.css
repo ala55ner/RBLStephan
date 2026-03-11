@@ -126,7 +126,7 @@ section {
 
 .hero {
     background: linear-gradient(135deg, var(--color-secondary-blue) 0%, #0D2147 100%);
-    padding: 10vh var(--spacing-xl) 6vh var(--spacing-xl);
+    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
     min-height: 75vh;
     display: flex;
     align-items: center;
