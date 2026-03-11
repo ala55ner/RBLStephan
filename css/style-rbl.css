@@ -340,18 +340,11 @@ section {
 /* Sleeve Section */
 .section-sleeve {
     background: linear-gradient(180deg, #E8E8E8 0%, #DEDEDE 100%);
-    min-height: 60vh;
+    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
+    min-height: 70vh;
     display: flex;
-}
-
-.section-sleeve .section-inner {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    padding: var(--spacing-xl);
-    flex: 1;
 }
 
 .sleeve-content h2 {
@@ -399,18 +392,11 @@ section {
 /* Potential Section */
 .section-potential {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    min-height: 70vh;
-    display: flex;
-}
-
-.section-potential .section-inner {
-    width: 100%;
     padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    flex: 1;
 }
 
 .activation-grid {
@@ -462,9 +448,9 @@ section {
 /* Stats Section */
 .section-stats {
     background: linear-gradient(135deg, #0A1B35 0%, #0D2147 100%);
-    padding: 6vh var(--spacing-xl) 6vh var(--spacing-xl);
+    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
     position: relative;
-    min-height: 45vh;
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
