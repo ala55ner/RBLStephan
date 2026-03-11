@@ -340,8 +340,8 @@ section {
 /* Sleeve Section */
 .section-sleeve {
     background: linear-gradient(180deg, #E8E8E8 0%, #DEDEDE 100%);
-    padding: 8vh var(--spacing-xl) 8vh var(--spacing-xl);
-    min-height: 70vh;
+    padding: 6vh var(--spacing-xl) 6vh var(--spacing-xl);
+    min-height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
