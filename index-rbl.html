@@ -4,70 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revolut × RB Leipzig | Sleeve Partnership</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style-rbl.css">
 </head>
 <body>
-    <!-- Fixed Player Container on Right -->
-    <div class="fixed-player">
+    <!-- Player - Fixed Right Side -->
+    <aside class="player-fixed">
         <canvas id="heroCanvas"></canvas>
-    </div>
+    </aside>
 
-    <!-- Scrollable Content on Left -->
-    <main class="main-content">
+    <!-- Content - Left Side -->
+    <main class="content-wrapper">
         <!-- Hero Section -->
-        <section class="hero" data-section="hero">
+        <section class="section hero-section">
             <div class="section-inner">
-                <div class="hero-badge" data-enter="fade-up" data-delay="0">SPONSORSHIP OPPORTUNITY</div>
-                <h1 class="hero-title" data-enter="fade-up" data-delay="0.2">
-                    Revolut × RB Leipzig
-                </h1>
-                <p class="hero-subtitle" data-enter="fade-up" data-delay="0.4">
-                    The Next Generation of Global Football Partnerships
-                </p>
-                <p class="hero-body" data-enter="fade-up" data-delay="0.6">
-                    RB Leipzig represents one of the fastest-growing clubs in European football. A modern team, a modern fanbase, and a global platform built for ambitious brands.
-                </p>
-                <p class="hero-body" data-enter="fade-up" data-delay="0.8">
-                    For Revolut, the sleeve partnership is an opportunity to align with a club that embodies innovation, speed, and international reach.
-                </p>
-                <div class="hero-cta" data-enter="scale-up" data-delay="1">
+                <div class="label" data-scroll-reveal>Sponsorship Opportunity</div>
+                <h1 class="title-mega" data-scroll-reveal>Revolut × RB Leipzig</h1>
+                <p class="subtitle" data-scroll-reveal>The Next Generation of Global Football Partnerships</p>
+                <p class="body-text" data-scroll-reveal>RB Leipzig represents one of the fastest-growing clubs in European football. A modern team, a modern fanbase, and a global platform built for ambitious brands.</p>
+                <p class="body-text" data-scroll-reveal>For Revolut, the sleeve partnership is an opportunity to align with a club that embodies innovation, speed, and international reach.</p>
+                <div class="cta-buttons" data-scroll-reveal>
                     <button class="btn btn-primary">Explore Partnership</button>
                 </div>
             </div>
         </section>
 
-        <!-- Section 1: Opening Statement -->
-        <section class="section-opening" data-section="opening">
+        <!-- Opening Section -->
+        <section class="section opening-section">
             <div class="section-inner">
-                <h2 data-enter="slide-left">Why Now?</h2>
-                <p data-enter="fade-up" data-delay="0.2">
-                    Football is experiencing a generational shift. Fans are younger, more global, and increasingly digital-first. RB Leipzig is at the center of this evolution.
-                </p>
+                <h2 class="title-large" data-scroll-reveal>Why Now?</h2>
+                <p class="body-text" data-scroll-reveal>Football is experiencing a generational shift. Fans are younger, more global, and increasingly digital-first. RB Leipzig is at the center of this evolution, building a platform for brands that want to connect with the future of sport.</p>
             </div>
         </section>
 
-        <!-- Section 2: Why RB Leipzig -->
-        <section class="section-why-rbl" data-section="why-rbl">
+        <!-- Why RBL Section -->
+        <section class="section why-section">
             <div class="section-inner">
-                <h2 class="section-title" data-enter="slide-left">Why RB Leipzig?</h2>
-
-                <div class="three-column-grid">
-                    <div class="column" data-enter="fade-up" data-delay="0">
-                        <div class="column-header">
-                            <span class="column-number">01</span>
+                <h2 class="title-large" data-scroll-reveal>Why RB Leipzig?</h2>
+                <div class="three-col">
+                    <div class="col-card" data-scroll-reveal>
+                        <div class="col-header">
+                            <span class="col-num">01</span>
                             <h3>A New Generation Club</h3>
                         </div>
                         <p>RB Leipzig is not defined by legacy — it is defined by momentum. Founded in 2009, the club has rapidly become a fixture in the Bundesliga and Champions League.</p>
                         <p>This creates a platform for brands that want to be associated with growth, disruption, and modern football culture.</p>
                     </div>
 
-                    <div class="column" data-enter="fade-up" data-delay="0.2">
-                        <div class="column-header">
-                            <span class="column-number">02</span>
+                    <div class="col-card" data-scroll-reveal>
+                        <div class="col-header">
+                            <span class="col-num">02</span>
                             <h3>Global Football Audience</h3>
                         </div>
                         <p>RB Leipzig competes at the highest levels of European competition, providing:</p>
-                        <ul class="column-list">
+                        <ul class="col-list">
                             <li>Global broadcast exposure</li>
                             <li>International fan growth</li>
                             <li>Regular Champions League visibility</li>
@@ -75,76 +67,75 @@
                         <p>For Revolut, this means visibility in key financial markets across Europe and beyond.</p>
                     </div>
 
-                    <div class="column" data-enter="fade-up" data-delay="0.4">
-                        <div class="column-header">
-                            <span class="column-number">03</span>
+                    <div class="col-card" data-scroll-reveal>
+                        <div class="col-header">
+                            <span class="col-num">03</span>
                             <h3>Innovation Alignment</h3>
                         </div>
                         <p>Both brands share a similar DNA:</p>
-                        <div class="dna-comparison">
+                        <div class="dna-box">
                             <div class="dna-item">
                                 <strong>RB Leipzig</strong>
                                 <span>Fast. Modern. Ambitious.</span>
                             </div>
-                            <div class="dna-separator">+</div>
+                            <div class="dna-sep">+</div>
                             <div class="dna-item">
                                 <strong>Revolut</strong>
                                 <span>Digital-first. Global. Disruptive.</span>
                             </div>
                         </div>
-                        <p style="margin-top: 1.5rem;">This partnership tells a clear story: a next-generation bank partnering with a next-generation football club.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: The Sleeve Asset -->
-        <section class="section-sleeve" data-section="sleeve">
-            <div class="section-inner sleeve-content">
-                <h2 data-enter="slide-right">The Most Visible Real Estate on the Shirt</h2>
-                <p data-enter="fade-up" data-delay="0.2">The sleeve position offers unparalleled exposure during live matches:</p>
-                <ul class="sleeve-list" data-enter="stagger-up" data-delay="0.4">
-                    <li data-index="0">Broadcast coverage during all 90 minutes</li>
-                    <li data-index="1">Goal celebrations and key moments</li>
-                    <li data-index="2">Social media highlights and clips</li>
-                    <li data-index="3">Player interviews and sideline moments</li>
-                    <li data-index="4">Official match photography</li>
+        <!-- Sleeve Section -->
+        <section class="section sleeve-section">
+            <div class="section-inner">
+                <h2 class="title-large" data-scroll-reveal>The Most Visible Asset on the Shirt</h2>
+                <p class="body-text" data-scroll-reveal>The sleeve position offers unparalleled exposure during live matches:</p>
+                <ul class="feature-list" data-scroll-reveal>
+                    <li>Broadcast coverage during all 90 minutes</li>
+                    <li>Goal celebrations and key moments</li>
+                    <li>Social media highlights and clips</li>
+                    <li>Player interviews and sideline moments</li>
+                    <li>Official match photography</li>
                 </ul>
             </div>
         </section>
 
-        <!-- Section 4: Partnership Potential -->
-        <section class="section-potential" data-section="potential">
+        <!-- Activation Section -->
+        <section class="section activation-section">
             <div class="section-inner">
-                <h2 class="section-title" data-enter="slide-left">Activation Opportunities</h2>
-                <div class="activation-grid">
-                    <div class="activation-tile" data-enter="fade-up" data-delay="0">
-                        <div class="tile-number">01</div>
+                <h2 class="title-large" data-scroll-reveal>Activation Opportunities</h2>
+                <div class="tiles-grid">
+                    <div class="tile" data-scroll-reveal>
+                        <div class="tile-num">01</div>
                         <h3>Matchday Payments</h3>
                         <p>Integrate Revolut into the matchday experience. Fan payments, merchandise, concessions.</p>
                     </div>
-                    <div class="activation-tile" data-enter="fade-up" data-delay="0.1">
-                        <div class="tile-number">02</div>
+                    <div class="tile" data-scroll-reveal>
+                        <div class="tile-num">02</div>
                         <h3>Digital Fan Wallet</h3>
                         <p>Custom digital wallet experiences for RB Leipzig fans. Exclusive discounts and rewards.</p>
                     </div>
-                    <div class="activation-tile" data-enter="fade-up" data-delay="0.2">
-                        <div class="tile-number">03</div>
+                    <div class="tile" data-scroll-reveal>
+                        <div class="tile-num">03</div>
                         <h3>Global Fintech Campaigns</h3>
                         <p>Player-led content showcasing modern financial solutions to a global audience.</p>
                     </div>
-                    <div class="activation-tile" data-enter="fade-up" data-delay="0.3">
-                        <div class="tile-number">04</div>
+                    <div class="tile" data-scroll-reveal>
+                        <div class="tile-num">04</div>
                         <h3>International Promotions</h3>
                         <p>Cross-promotional campaigns targeting RB Leipzig's international fanbase in key markets.</p>
                     </div>
-                    <div class="activation-tile" data-enter="fade-up" data-delay="0.4">
-                        <div class="tile-number">05</div>
+                    <div class="tile" data-scroll-reveal>
+                        <div class="tile-num">05</div>
                         <h3>Content Partnerships</h3>
                         <p>Behind-the-scenes content, training camp access, and exclusive player storytelling.</p>
                     </div>
-                    <div class="activation-tile" data-enter="fade-up" data-delay="0.5">
-                        <div class="tile-number">06</div>
+                    <div class="tile" data-scroll-reveal>
+                        <div class="tile-num">06</div>
                         <h3>Financial Education</h3>
                         <p>Athlete-led financial literacy campaigns reaching millions of young fans globally.</p>
                     </div>
@@ -152,35 +143,36 @@
             </div>
         </section>
 
-        <!-- Section 5: The Numbers -->
-        <section class="section-stats" data-section="stats">
+        <!-- Stats Section -->
+        <section class="section stats-section">
             <div class="section-inner">
-                <h2 class="section-title" data-enter="fade-up">By The Numbers</h2>
+                <h2 class="title-large" data-scroll-reveal>By The Numbers</h2>
                 <div class="stats-grid">
-                    <div class="stat-card" data-enter="scale-up" data-delay="0">
-                        <div class="stat-value" data-value="25000000">0</div>
+                    <div class="stat-box" data-scroll-reveal>
+                        <div class="stat-num" data-value="25000000">0</div>
                         <p class="stat-label">Global Annual Viewers</p>
                     </div>
-                    <div class="stat-card" data-enter="scale-up" data-delay="0.15">
-                        <div class="stat-value" data-value="1500000">0</div>
+                    <div class="stat-box" data-scroll-reveal>
+                        <div class="stat-num" data-value="1500000">0</div>
                         <p class="stat-label">Social Media Followers</p>
                     </div>
-                    <div class="stat-card" data-enter="scale-up" data-delay="0.3">
-                        <div class="stat-value" data-value="34">0</div>
-                        <p class="stat-label">Champions League Matches/Season</p>
+                    <div class="stat-box" data-scroll-reveal>
+                        <div class="stat-num" data-value="34">0</div>
+                        <p class="stat-label">Champions League Matches</p>
                     </div>
-                    <div class="stat-card" data-enter="scale-up" data-delay="0.45">
-                        <div class="stat-value" data-value="98">0</div>
-                        <p class="stat-label">Bundesliga Matches/Season</p>
+                    <div class="stat-box" data-scroll-reveal>
+                        <div class="stat-num" data-value="98">0</div>
+                        <p class="stat-label">Bundesliga Matches</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Final Section -->
-        <section class="section-final" data-section="final">
+        <!-- Closing Section -->
+        <section class="section closing-section">
             <div class="section-inner">
-                <h2 data-enter="slide-left">Let's build the future of football partnerships</h2>
+                <h1 class="title-mega" data-scroll-reveal>Let's Build the Future</h1>
+                <p class="subtitle" data-scroll-reveal>Connect with us to explore this unique opportunity</p>
             </div>
         </section>
     </main>

@@ -11,59 +11,63 @@ const state = {
     isPreloading: true,
     canvas: null,
     ctx: null,
-    lastScrollProgress: -1,
-    frameBuffer: new Map()
+    lenis: null,
+    animatedElements: new Set(),
+    lastScrollTime: 0,
+    scrollTimeout: null
 };
 
-// Preload frames efficiently
+// ============================================
+// FRAME PRELOADING & RENDERING
+// ============================================
+
 async function preloadFrames() {
     const canvas = document.getElementById('heroCanvas');
     if (!canvas) {
-        console.error('Canvas not found');
+        console.error('❌ Canvas not found');
         return;
     }
 
     state.canvas = canvas;
     state.ctx = canvas.getContext('2d');
-
-    // Pre-size canvas
     initCanvas();
 
-    console.log('Loading frames...');
+    console.log('🎬 Loading frames...');
 
-    // Load all frames
     const promises = [];
     for (let i = 1; i <= CONFIG.TOTAL_FRAMES; i++) {
-        promises.push(new Promise((resolve) => {
-            const img = new Image();
-            const frameNum = String(i).padStart(4, '0');
+        promises.push(
+            new Promise((resolve) => {
+                const img = new Image();
+                const frameNum = String(i).padStart(4, '0');
 
-            img.onload = () => {
-                state.frames[i - 1] = img;
-                resolve();
-            };
-            img.onerror = () => {
-                console.warn(`Frame ${frameNum} failed`);
-                resolve();
-            };
+                img.onload = () => {
+                    state.frames[i - 1] = img;
+                    resolve();
+                };
 
-            img.src = CONFIG.FRAME_PATH.replace('%04d', frameNum);
-        }));
+                img.onerror = () => {
+                    console.warn(`⚠️  Frame ${frameNum} not found`);
+                    resolve();
+                };
+
+                img.src = CONFIG.FRAME_PATH.replace('%04d', frameNum);
+            })
+        );
     }
 
     await Promise.all(promises);
-    console.log(`Loaded ${state.frames.filter(f => f).length} frames`);
+    const loadedCount = state.frames.filter(f => f).length;
+    console.log(`✅ Loaded ${loadedCount}/${CONFIG.TOTAL_FRAMES} frames`);
 
     state.isPreloading = false;
     drawFrame(0);
 }
 
-// Initialize canvas
 function initCanvas() {
     const canvas = state.canvas;
-    const parent = canvas.parentElement;
     const dpr = window.devicePixelRatio || 1;
-    const rect = parent.getBoundingClientRect();
+    const rect = canvas.parentElement.getBoundingClientRect();
 
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
@@ -73,10 +77,8 @@ function initCanvas() {
     state.ctx.scale(dpr, dpr);
 }
 
-// Optimized frame drawing
 function drawFrame(index) {
-    if (!state.frames[index]) return;
-    if (index === state.currentFrameIndex) return;
+    if (!state.frames[index] || index === state.currentFrameIndex) return;
 
     const frame = state.frames[index];
     const canvas = state.canvas;
@@ -84,8 +86,11 @@ function drawFrame(index) {
     const w = canvas.offsetWidth;
     const h = canvas.offsetHeight;
 
-    ctx.clearRect(0, 0, w, h);
+    // Clear canvas
+    ctx.fillStyle = '#0A1B35';
+    ctx.fillRect(0, 0, w, h);
 
+    // Draw frame with proper aspect ratio
     const imgAspect = frame.width / frame.height;
     const canvasAspect = w / h;
 
@@ -105,237 +110,163 @@ function drawFrame(index) {
     state.currentFrameIndex = index;
 }
 
-// Scroll handler - triggers frame updates
-function onScroll() {
+// ============================================
+// SMOOTH SCROLL FRAME UPDATES
+// ============================================
+
+function updateFrameOnScroll() {
     if (state.isPreloading || state.frames.length === 0) return;
 
+    // Calculate scroll progress
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrolled = window.scrollY;
     const progress = docHeight > 0 ? scrolled / docHeight : 0;
 
-    state.lastScrollProgress = progress;
-
+    // Smooth frame mapping with easing
     const maxIndex = CONFIG.TOTAL_FRAMES - 1;
-    const frameIndex = Math.floor(progress * maxIndex);
-    const index = Math.min(frameIndex, maxIndex);
+    const frameIndexRaw = progress * maxIndex;
+
+    // Use smooth interpolation
+    const frameIndex = Math.round(frameIndexRaw);
+    const index = Math.min(Math.max(frameIndex, 0), maxIndex);
 
     drawFrame(index);
 }
 
-// Initialize Lenis with optimized settings
+function animateScrollElements() {
+    const elements = document.querySelectorAll('[data-scroll-reveal]:not(.is-visible)');
+
+    elements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const triggerPoint = window.innerHeight * 0.85;
+
+        if (rect.top < triggerPoint && rect.bottom > 0 && !state.animatedElements.has(el)) {
+            el.classList.add('is-visible');
+            state.animatedElements.add(el);
+        }
+    });
+}
+
+function animateNumbersOnScroll() {
+    const statNumbers = document.querySelectorAll('.stat-num[data-value]');
+
+    statNumbers.forEach((el) => {
+        if (el.dataset.animating === 'true') return;
+
+        const rect = el.getBoundingClientRect();
+        const isInView = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+
+        if (isInView && !el.dataset.animated) {
+            el.dataset.animating = 'true';
+            animateNumber(el);
+        }
+    });
+}
+
+function animateNumber(el) {
+    const targetVal = parseInt(el.dataset.value) || 0;
+    const duration = 2.4;
+    const steps = 60;
+    const stepDuration = (duration * 1000) / steps;
+    let currentStep = 0;
+
+    function updateNumber() {
+        currentStep++;
+        const progress = currentStep / steps;
+        const easeProgress = easeOutQuad(progress);
+        const currentVal = Math.floor(easeProgress * targetVal);
+
+        if (currentVal >= 1000000) {
+            el.textContent = (currentVal / 1000000).toFixed(1) + 'M';
+        } else if (currentVal >= 1000) {
+            el.textContent = (currentVal / 1000).toFixed(0) + 'K';
+        } else {
+            el.textContent = currentVal.toString();
+        }
+
+        if (currentStep < steps) {
+            setTimeout(updateNumber, stepDuration);
+        } else {
+            el.dataset.animated = 'true';
+            el.dataset.animating = 'false';
+        }
+    }
+
+    updateNumber();
+}
+
+function easeOutQuad(t) {
+    return t * (2 - t);
+}
+
+// ============================================
+// LENIS SMOOTH SCROLL
+// ============================================
+
 function initSmooth() {
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         direction: 'vertical',
         smooth: true,
-        smoothTouch: false,
+        smoothTouch: true,
         mouseMultiplier: 1,
-        touchMultiplier: 2,
-        syncTouch: true,
+        touchMultiplier: 1
     });
 
-    // RAF loop
+    state.lenis = lenis;
+
+    // RAF loop for Lenis
     function raf(time) {
         lenis.raf(time);
         requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
 
-    // Connect to GSAP
-    lenis.on('scroll', () => {
-        ScrollTrigger.update();
-        onScroll();
-    });
+    // Optimized scroll event with throttling
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateFrameOnScroll();
+                animateScrollElements();
+                animateNumbersOnScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
 
     return lenis;
 }
 
-// GSAP animations - optimized
-function initAnimations() {
-    gsap.registerPlugin(ScrollTrigger);
+// ============================================
+// INITIALIZATION
+// ============================================
 
-    // Hero animations - immediate
-    const heroElements = document.querySelectorAll('.hero [data-enter]');
-    const heroTl = gsap.timeline();
-
-    heroElements.forEach((el) => {
-        const delay = parseFloat(el.dataset.delay) || 0;
-        const type = el.dataset.enter;
-        const props = getProps(type);
-
-        heroTl.fromTo(el, props, {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: 'power2.out'
-        }, delay);
-    });
-
-    // Lazy load other section animations
-    setTimeout(() => {
-        animateSections();
-    }, 100);
-}
-
-function animateSections() {
-    // Opening
-    animateSection('.section-opening', [
-        { sel: 'h2', type: 'slide-left' },
-        { sel: 'p', type: 'fade-up', delay: 0.15 }
-    ]);
-
-    // Why RBL
-    animateSection('.section-why-rbl', [
-        { sel: '.section-title', type: 'slide-left' }
-    ]);
-
-    document.querySelectorAll('.column[data-enter]').forEach((col, i) => {
-        gsap.to(col, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: col,
-                start: 'top 75%',
-                once: true
-            },
-            delay: i * 0.08
-        });
-    });
-
-    // Sleeve
-    animateSection('.section-sleeve', [
-        { sel: 'h2', type: 'slide-right' },
-        { sel: 'p', type: 'fade-up', delay: 0.15 }
-    ]);
-
-    // Activation tiles
-    document.querySelectorAll('.activation-tile').forEach((tile, i) => {
-        gsap.to(tile, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: tile,
-                start: 'top 80%',
-                once: true
-            },
-            delay: i * 0.06
-        });
-    });
-
-    // Stats with counters
-    document.querySelectorAll('.stat-card').forEach((card, i) => {
-        const valueEl = card.querySelector('.stat-value');
-        const targetVal = parseInt(valueEl.dataset.value) || 0;
-
-        gsap.timeline({
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 75%',
-                once: true
-            }
-        })
-            .to(card, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.5,
-                ease: 'power2.out'
-            }, 0)
-            .to({ value: 0 }, {
-                value: targetVal,
-                duration: 1.2,
-                ease: 'power1.out',
-                onUpdate: function() {
-                    const n = Math.floor(this.targets()[0].value);
-                    if (n >= 1000000) {
-                        valueEl.textContent = (n / 1000000).toFixed(0) + 'M';
-                    } else if (n >= 1000) {
-                        valueEl.textContent = (n / 1000).toFixed(0) + 'K';
-                    } else {
-                        valueEl.textContent = n.toString();
-                    }
-                }
-            }, 0.1);
-    });
-
-    // Closing
-    animateSection('.section-closing', [
-        { sel: 'h2', type: 'slide-left' },
-        { sel: 'p', type: 'fade-up', delay: 0.15 }
-    ]);
-
-    // Final
-    animateSection('.section-final', [
-        { sel: 'h2', type: 'slide-left' }
-    ]);
-}
-
-function getProps(type) {
-    switch (type) {
-        case 'fade-up':
-            return { opacity: 0, y: 30 };
-        case 'slide-left':
-            return { opacity: 0, x: -50 };
-        case 'slide-right':
-            return { opacity: 0, x: 50 };
-        case 'scale-up':
-            return { opacity: 0, scale: 0.9 };
-        default:
-            return { opacity: 0 };
-    }
-}
-
-function animateSection(selector, items) {
-    const section = document.querySelector(selector);
-    if (!section) return;
-
-    items.forEach(({ sel, type, delay = 0 }) => {
-        const el = section.querySelector(sel);
-        if (!el) return;
-        const props = getProps(type);
-
-        gsap.to(el, {
-            ...props,
-            opacity: 1,
-            x: 0,
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: el,
-                start: 'top 75%',
-                once: true
-            },
-            delay
-        });
-    });
-}
-
-// Main init
 async function init() {
+    console.log('⚡ Initializing Premium Pitch Deck...');
+
+    // Preload frames
     await preloadFrames();
+
+    // Initialize smooth scroll
     initSmooth();
-    initAnimations();
 
-    // Scroll listener
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Initial animation pass
+    animateScrollElements();
+    animateNumbersOnScroll();
 
-    // Resize
+    // Handle window resize
     window.addEventListener('resize', () => {
         initCanvas();
         drawFrame(state.currentFrameIndex);
-    });
+    }, { passive: true });
 
-    console.log('🎬 Website ready');
+    console.log('✅ Ready to present! Scroll to see the magic.');
 }
 
+// Start when ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
