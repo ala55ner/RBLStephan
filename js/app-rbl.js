@@ -1,68 +1,71 @@
 // Configuration
 const CONFIG = {
     TOTAL_FRAMES: 121,
-    FRAME_PATH: 'frames/frame_%04d.png'
+    FRAME_PATH: 'frames/frame_%04d.png',
+    PRELOAD_BUFFER: 15  // Load 15 frames ahead and behind current
 };
 
 // State
 const state = {
-    frames: [],
+    frames: new Map(),
     currentFrameIndex: -1,
     isPreloading: true,
     canvas: null,
     ctx: null,
     lenis: null,
     animatedElements: new Set(),
-    lastScrollTime: 0,
-    scrollTimeout: null
+    loadingFrames: new Set(),
+    preloadQueue: []
 };
 
 // ============================================
-// FRAME PRELOADING & RENDERING
+// LAZY FRAME LOADING
 // ============================================
 
-async function preloadFrames() {
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) {
-        console.error('❌ Canvas not found');
-        return;
-    }
+async function loadFrame(index) {
+    if (state.frames.has(index) || state.loadingFrames.has(index)) return;
 
-    state.canvas = canvas;
-    state.ctx = canvas.getContext('2d');
-    initCanvas();
+    state.loadingFrames.add(index);
 
-    console.log('🎬 Loading frames...');
+    return new Promise((resolve) => {
+        const img = new Image();
+        const frameNum = String(index + 1).padStart(4, '0');
+
+        img.onload = () => {
+            state.frames.set(index, img);
+            state.loadingFrames.delete(index);
+            resolve(img);
+        };
+
+        img.onerror = () => {
+            state.loadingFrames.delete(index);
+            resolve(null);
+        };
+
+        img.src = CONFIG.FRAME_PATH.replace('%04d', frameNum);
+    });
+}
+
+async function preloadFramesAroundIndex(centerIndex) {
+    const buffer = CONFIG.PRELOAD_BUFFER;
+    const start = Math.max(0, centerIndex - buffer);
+    const end = Math.min(CONFIG.TOTAL_FRAMES - 1, centerIndex + buffer);
 
     const promises = [];
-    for (let i = 1; i <= CONFIG.TOTAL_FRAMES; i++) {
-        promises.push(
-            new Promise((resolve) => {
-                const img = new Image();
-                const frameNum = String(i).padStart(4, '0');
-
-                img.onload = () => {
-                    state.frames[i - 1] = img;
-                    resolve();
-                };
-
-                img.onerror = () => {
-                    console.warn(`⚠️  Frame ${frameNum} not found`);
-                    resolve();
-                };
-
-                img.src = CONFIG.FRAME_PATH.replace('%04d', frameNum);
-            })
-        );
+    for (let i = start; i <= end; i++) {
+        if (!state.frames.has(i) && !state.loadingFrames.has(i)) {
+            promises.push(loadFrame(i));
+        }
     }
 
-    await Promise.all(promises);
-    const loadedCount = state.frames.filter(f => f).length;
-    console.log(`✅ Loaded ${loadedCount}/${CONFIG.TOTAL_FRAMES} frames`);
-
-    state.isPreloading = false;
-    drawFrame(0);
+    if (promises.length > 0) {
+        await Promise.all(promises);
+    }
 }
+
+// ============================================
+// CANVAS & RENDERING
+// ============================================
 
 function initCanvas() {
     const canvas = state.canvas;
@@ -78,9 +81,11 @@ function initCanvas() {
 }
 
 function drawFrame(index) {
-    if (!state.frames[index] || index === state.currentFrameIndex) return;
+    if (!state.frames.has(index) || index === state.currentFrameIndex) return;
 
-    const frame = state.frames[index];
+    const frame = state.frames.get(index);
+    if (!frame) return;
+
     const canvas = state.canvas;
     const ctx = state.ctx;
     const w = canvas.offsetWidth;
@@ -111,26 +116,27 @@ function drawFrame(index) {
 }
 
 // ============================================
-// SMOOTH SCROLL FRAME UPDATES
+// SCROLL HANDLING
 // ============================================
 
 function updateFrameOnScroll() {
-    if (state.isPreloading || state.frames.length === 0) return;
+    if (state.frames.size === 0) return;
 
     // Calculate scroll progress
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrolled = window.scrollY;
     const progress = docHeight > 0 ? scrolled / docHeight : 0;
 
-    // Smooth frame mapping with easing
+    // Map to frame index
     const maxIndex = CONFIG.TOTAL_FRAMES - 1;
-    const frameIndexRaw = progress * maxIndex;
-
-    // Use smooth interpolation
-    const frameIndex = Math.round(frameIndexRaw);
+    const frameIndex = Math.round(progress * maxIndex);
     const index = Math.min(Math.max(frameIndex, 0), maxIndex);
 
+    // Draw current frame if loaded
     drawFrame(index);
+
+    // Preload frames around current position
+    preloadFramesAroundIndex(index);
 }
 
 function animateScrollElements() {
@@ -245,10 +251,29 @@ function initSmooth() {
 // ============================================
 
 async function init() {
-    console.log('⚡ Initializing Premium Pitch Deck...');
+    console.log('⚡ Initializing Premium Pitch Deck (Fast Loading)...');
 
-    // Preload frames
-    await preloadFrames();
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) {
+        console.error('❌ Canvas not found');
+        return;
+    }
+
+    state.canvas = canvas;
+    state.ctx = canvas.getContext('2d');
+    initCanvas();
+
+    // Load first frame + buffer immediately
+    console.log('🎬 Preloading frames...');
+    await preloadFramesAroundIndex(0);
+
+    // Draw first frame
+    if (state.frames.has(0)) {
+        drawFrame(0);
+        console.log('✅ First frame loaded - page ready instantly!');
+    }
+
+    state.isPreloading = false;
 
     // Initialize smooth scroll
     initSmooth();
@@ -260,10 +285,12 @@ async function init() {
     // Handle window resize
     window.addEventListener('resize', () => {
         initCanvas();
-        drawFrame(state.currentFrameIndex);
+        if (state.currentFrameIndex >= 0) {
+            drawFrame(state.currentFrameIndex);
+        }
     }, { passive: true });
 
-    console.log('✅ Ready to present! Scroll to see the magic.');
+    console.log('✅ Ready! Frames load as you scroll.');
 }
 
 // Start when ready
